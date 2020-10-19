@@ -24,9 +24,9 @@ class MovieFactory extends Factory
     return [
       "title" => $this->faker->text('40'),
       "director" => $this->faker->name(),
-      "imageUrl" => 'https://png.pngtree.com/png-clipart/20190520/original/pngtree-movie-roll-six-holes-icon-png-image_4235803.jpg',
+      "image_url" => 'https://png.pngtree.com/png-clipart/20190520/original/pngtree-movie-roll-six-holes-icon-png-image_4235803.jpg',
       'duration' => $this->faker->numberBetween(30, 300),
-      'releaseDate' => $this->faker->date('Y-m-d', 'now'),
+      'release_date' => $this->faker->date('Y-m-d', 'now'),
       'genre' => $this->faker->word(),
     ];
   }
