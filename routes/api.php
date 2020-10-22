@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,13 +16,19 @@ use App\Http\Controllers\MoviesController;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-  return $request->user();
+  return auth('api')->user();
 });
 
-Route::get('/movies', [MoviesController::class, 'index']);
-Route::get('/movies/{id}', [MoviesController::class, 'show']);
-Route::post('/movies', [MoviesController::class, 'store']);
-Route::put('/movies/{id}', [MoviesController::class, 'update']);
-Route::delete('/movies/{id}', [MoviesController::class, 'destroy']);
+Route::group(['middleware' => 'auth:api'], function () {
+  Route::get('/movies', [MoviesController::class, 'index']);
+  Route::get('/movies/{id}', [MoviesController::class, 'show']);
+  Route::post('/movies', [MoviesController::class, 'store']);
+  Route::put('/movies/{id}', [MoviesController::class, 'update']);
+  Route::delete('/movies/{id}', [MoviesController::class, 'destroy']);
+});
 
 // Route::resource('movies', MoviesController::class, [ 'except'=>'index' ]);
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/refresh-token', [AuthController::class, 'refreshToken']);
+Route::post('/logout', [AuthController::class, 'logout']);
